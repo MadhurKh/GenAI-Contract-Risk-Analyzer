@@ -1,0 +1,125 @@
+{
+  "run_id": "2026-02-03T11-54-39Z_ojwh",
+  "contract": {
+    "title": "Sample MSA",
+    "source_type": "upload",
+    "text_length": 313
+  },
+  "summary": {
+    "overall_risk_score": 4,
+    "risk_level": "Low",
+    "top_risks": [
+      {
+        "category": "General",
+        "title": "No high-signal risk clauses detected by the demo rules."
+      }
+    ]
+  },
+  "findings": [
+    {
+      "finding_id": "R-000",
+      "category": "General",
+      "risk_statement": "No high-signal risk clauses detected by the demo rules.",
+      "severity": "Low",
+      "confidence": 0.6,
+      "evidence": [
+        {
+          "clause_ref": "N/A",
+          "snippet": "No matched patterns in provided text."
+        }
+      ],
+      "recommendation": "Run with a larger contract sample or connect to the full model pipeline.",
+      "proposed_redline": null
+    }
+  ],
+  "audit": [
+    {
+      "ts": "2026-02-03T11:54:39.315397Z",
+      "event": "UPLOAD_RECEIVED",
+      "details": {
+        "source_type": "upload"
+      }
+    },
+    {
+      "ts": "2026-02-03T11:54:39.315397Z",
+      "event": "FEATURES_EXTRACTED",
+      "details": {
+        "feature_count": 7
+      }
+    },
+    {
+      "ts": "2026-02-03T11:54:39.315397Z",
+      "event": "SCORING_COMPLETED",
+      "details": {
+        "score": 4,
+        "level": "Low"
+      }
+    },
+    {
+      "ts": "2026-02-03T11:54:39.315397Z",
+      "event": "ANALYSIS_COMPLETED",
+      "details": null
+    }
+  ],
+  "features": {
+    "version": "1.0",
+    "features": [
+      {
+        "name": "text_length",
+        "value": 313,
+        "dtype": "int"
+      },
+      {
+        "name": "has_consequential_damages",
+        "value": false,
+        "dtype": "bool"
+      },
+      {
+        "name": "has_uncapped_liability",
+        "value": false,
+        "dtype": "bool"
+      },
+      {
+        "name": "has_indemnity",
+        "value": false,
+        "dtype": "bool"
+      },
+      {
+        "name": "has_termination_for_convenience",
+        "value": false,
+        "dtype": "bool"
+      },
+      {
+        "name": "has_cure_period",
+        "value": false,
+        "dtype": "bool"
+      },
+      {
+        "name": "has_auto_renewal",
+        "value": false,
+        "dtype": "bool"
+      }
+    ]
+  },
+  "scoring": {
+    "method": "weighted_severity_sum_v1",
+    "weights": {
+      "Low": 10,
+      "Medium": 20,
+      "High": 35,
+      "Critical": 50
+    },
+    "total_points": 6.0,
+    "normalized_score_0_100": 4,
+    "risk_level": "Low",
+    "items": [
+      {
+        "finding_id": "R-000",
+        "severity": "Low",
+        "weight": 10,
+        "confidence": 0.6,
+        "points": 6.0
+      }
+    ]
+  }
+}
