@@ -10,6 +10,9 @@ This project demonstrates how Generative AI can assist legal/procurement teams b
 
 ---
 
+## Demo video
+- 2-minute walkthrough (Google Drive): https://drive.google.com/file/d/12sLuSNMl59imbLOYdIYgVAPFbO6yn9TY/view?usp=drive_link
+
 ## Quick Start (Windows)
 
 ### Prerequisites
