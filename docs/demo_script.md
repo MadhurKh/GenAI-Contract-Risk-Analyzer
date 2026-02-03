@@ -2,8 +2,8 @@
 
 ## Goal (10 seconds)
 Demonstrate an enterprise-style GenAI application that:
-- Converts unstructured contract text into structured risk outputs
-- Produces audit-friendly artifacts (risk register, evidence, audit log, data contract)
+- Converts unstructured contract text into **structured, reviewable outputs**
+- Produces audit-friendly artifacts (risk register, evidence, scoring breakdown, audit log, exportable JSON)
 - Uses a DS-friendly interface contract so modeling can evolve without UI rewrites
 
 ---
@@ -16,80 +16,86 @@ Demonstrate an enterprise-style GenAI application that:
 ---
 
 ## Step 1 — Input (15 seconds)
-- Paste a contract excerpt (or use a sample contract).
-- Optional: choose contract type / jurisdiction if the UI has it.
+- Paste a contract excerpt or upload a sample `.txt`.
 
-**What to say:**
-“This system accepts raw contract text, the same format legal and procurement teams receive in reality.”
+**Say:**
+“This takes raw contract text in the same format legal/procurement teams receive.”
 
 ---
 
-## Step 2 — Output (45 seconds)
-Point to the top summary:
-- **Overall Risk Score** (0–100)
-- **Risk Level** (Low / Medium / High)
+## Step 2 — Executive Output Summary (20 seconds)
+Point to:
+- **Overall Risk Score (0–100)**
+- **Risk Level**
 - **Findings count**
 
-Open the **Risk Register** section:
-- Show each finding: category, severity, recommendation/mitigation
-
-**What to say:**
-“The output is structured, not a chat response. It’s a risk register that can be used downstream by legal/procurement teams.”
+**Say:**
+“This produces structured outputs—this is not a chat response; it’s decision-support.”
 
 ---
 
-## Step 3 — Evidence (30 seconds)
-Open the **Evidence** tab/section:
-- Show clause snippets mapped to each finding
+## Step 3 — Risk Register (30 seconds)
+Open **Risk Register**:
+- Show each finding: category, severity, recommendation / mitigation
 
-**What to say:**
-“Every risk is backed by traceable evidence. This avoids ‘black box’ outputs and makes it reviewable.”
-
----
-
-## Step 4 — Auditability (30 seconds)
-Open **Audit Log**:
-- Show steps, components invoked, versions
-
-**What to say:**
-“This is designed for enterprise governance: audit log + version metadata for reproducibility and control.”
+**Say:**
+“Each finding is a structured risk register entry that can be reviewed, tracked, and exported.”
 
 ---
 
-## Step 5 — Data Contract (20 seconds)
-Open **Data Contract**:
-- Show the input/output schema expectations
+## Step 4 — Evidence (20 seconds)
+Open **Evidence**:
+- Show clause snippet tied to the finding
 
-**What to say:**
-“This is where engineering and data science align. Schemas are source-of-truth, enabling consistent integration and testing.”
+**Say:**
+“Every claim is backed by evidence snippets to avoid black-box outputs.”
 
 ---
 
-## How I work with Data Science (40 seconds) — Directly addressing the concern
-**What to say (use this verbatim):**
-“I collaborate with data science using explicit contracts and stable interfaces:
-- The UI calls a single adapter layer (`src/model_adapter.py`) and expects a strict schema (`src/schemas.py`).
-- DS can swap the scoring logic (rules/ML/LLM) without changing UI code.
-- We agree on thresholds/calibration and evaluation hooks in `docs/modeling_contract.md`.
-This is the same pattern used in production teams to iterate on models safely.”
+## Step 5 — Features Extracted (20 seconds)
+Open **Features Extracted**:
+- Show feature table (flags + counts)
+
+**Say:**
+“This is the DS handshake layer. The system exposes features explicitly so DS can plug in ML models or monitoring without touching the UI.”
+
+---
+
+## Step 6 — Scoring Logic (25 seconds)
+Open **Scoring Logic**:
+- Show weights + per-finding points
+
+**Say:**
+“The scoring is explainable: severity weights + confidence per finding, with a breakdown that’s reviewable and testable.”
+
+---
+
+## Step 7 — Auditability + Export (20 seconds)
+Open **Audit Log** + download JSON
+
+**Say:**
+“This includes an audit trail and exportable JSON—useful for governance and integration.”
+
+---
+
+## Step 8 — Data Contract (15 seconds)
+Open **Data Contract** tab.
+
+**Say:**
+“This is the interface contract between DS and Engineering: strict schemas for inputs/outputs so models can evolve safely.”
+
+---
+
+## How I work with Data Science (30–40 seconds) — address the concern directly
+**Say (verbatim):**
+“I work with Data Science through stable interfaces and explicit contracts:
+- The UI calls a single adapter (`src/model_adapter.py`) and expects a strict schema (`src/schemas.py`).
+- DS can replace the internals with rules/ML/LLM/RAG while keeping the same output contract.
+- We align on feature definitions, severity weights, thresholds, and evaluation metrics documented in `docs/modeling_contract.md`.
+This is the approach I use to lead teams where DS iteration happens safely without breaking product.”
 
 ---
 
 ## Close (10 seconds)
-**What to say:**
-“Today this demonstrates an end-to-end working product demo with enterprise outputs. Next steps are adding a labeled dataset and evaluation metrics to operationalize model iteration and drift monitoring.”
-
----
-
-## Optional Q&A prompts (if asked)
-**Q: What would you do next to productionize?**
-- Add offline evaluation harness + metrics (precision/recall, calibration)
-- Add CI tests for schema stability
-- Containerize + deploy with secrets management
-- Add PII guidance + redaction
-- Add monitoring for drift / usage
-
-**Q: Where does data modeling fit here?**
-- Define a canonical schema for findings/evidence/audit events
-- Version schemas
-- Maintain backward compatibility for downstream consumers
+**Say:**
+“Next steps to productionize are: add a labeled dataset, offline evaluation harness, CI checks, and deployment packaging with governance controls.”
