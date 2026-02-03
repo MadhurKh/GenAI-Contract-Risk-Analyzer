@@ -53,7 +53,7 @@ if run_btn:
 if "result" in st.session_state:
     data = st.session_state["result"]
 
-    # Summary metrics
+    # Summary metrics (these are the first thing a hiring manager sees)
     m1, m2, m3 = st.columns(3)
     m1.metric("Overall Risk Score", data["summary"]["overall_risk_score"])
     m2.metric("Risk Level", data["summary"]["risk_level"])
@@ -61,8 +61,10 @@ if "result" in st.session_state:
 
     st.divider()
 
-    # Tabs: Findings / Evidence / Audit / Data Contract
-    tab1, tab2, tab3, tab4 = st.tabs(["Risk Register", "Evidence", "Audit Log", "Data Contract"])
+    # Tabs: Findings / Evidence / Features / Scoring / Audit / Data Contract
+    tab1, tab2, tab_feat, tab_score, tab3, tab4 = st.tabs(
+        ["Risk Register", "Evidence", "Features Extracted", "Scoring Logic", "Audit Log", "Data Contract"]
+    )
 
     with tab1:
         st.subheader("Risk Register")
@@ -96,6 +98,41 @@ if "result" in st.session_state:
                     st.write(f'**{e["clause_ref"]}**')
                     st.code(e["snippet"])
 
+    with tab_feat:
+        st.subheader("Features Extracted (DS handshake layer)")
+        feats = (data.get("features") or {}).get("features", [])
+        if not feats:
+            st.info("No features returned.")
+        else:
+            # Nice table for leadership + DS
+            rows = [{"name": f["name"], "value": f["value"], "dtype": f["dtype"]} for f in feats]
+            st.dataframe(rows, use_container_width=True)
+
+            st.caption(
+                "These features are the structured inputs you would typically hand off to a DS model "
+                "(classifier/regression) or use for monitoring."
+            )
+
+    with tab_score:
+        st.subheader("Scoring Logic (transparent + reviewable)")
+        scoring = data.get("scoring")
+        if not scoring:
+            st.info("No scoring breakdown returned.")
+        else:
+            st.write("**Method:**", scoring.get("method"))
+            st.write("**Weights:**", scoring.get("weights"))
+            st.write("**Total points:**", scoring.get("total_points"))
+            st.write("**Normalized score (0–100):**", scoring.get("normalized_score_0_100"))
+            st.write("**Risk level:**", scoring.get("risk_level"))
+
+            st.divider()
+            st.subheader("Per-finding breakdown")
+            items = scoring.get("items", [])
+            if items:
+                st.dataframe(items, use_container_width=True)
+            else:
+                st.info("No items in scoring breakdown.")
+
     with tab3:
         st.subheader("Audit Log")
         st.json(data.get("audit", []))
@@ -121,7 +158,8 @@ if "result" in st.session_state:
 - `run_id` (string)
 - `summary` (risk score + level + top risks)
 - `findings[]` (structured risk register)
-- `evidence[]` inside each finding (**mandatory**)
+- `features` (feature set for DS/modeling)
+- `scoring` (explainable breakdown: weights + points)
 - `audit[]` events
 
 **Evidence rule**
